@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+
 using Crawler.Core.Schedulers;
+
 using Microsoft.Extensions.Logging;
 
 namespace Crawler.Core
@@ -25,9 +27,9 @@ namespace Crawler.Core
 
         public ILinkScheduler Scheduler { get; }
         public HttpClient HttpClient { get; }
-        public ILogger Logger { get; }
+        public ILogger? Logger { get; } = null;
 
-        public CrawlContext(Uri domain, ILogger logger, int httpConnectionLimit = 0)
+        public CrawlContext(Uri domain, ILogger? logger = null, int httpConnectionLimit = 0)
         {
             Domain = domain;
             Logger = logger;

@@ -105,7 +105,7 @@ namespace Crawler.Core
             }
             catch (Exception exception)
             {
-                _context.Logger.LogCritical("{@message}", new
+                _context.Logger?.LogCritical("{@message}", new
                 {
                     ServiceName = serviceName,
                     ActionName = nameof(ParsPageAsync),
@@ -119,7 +119,7 @@ namespace Crawler.Core
             }
             finally
             {
-                _context.Logger.LogTrace("{@message}", new
+                _context.Logger?.LogTrace("{@message}", new
                 {
                     ServiceName = serviceName,
                     ActionName = nameof(ParsPageAsync),

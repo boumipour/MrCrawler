@@ -31,7 +31,7 @@ namespace Crawler.Core.FindLinkStrategies
             }
             catch (Exception exception)
             {
-                context.Logger.LogCritical("{@message}", new
+                context.Logger?.LogCritical("{@message}", new
                 {
                     ServiceName = nameof(SitemapFindLinkStratesy),
                     ActionName = nameof(FindLinksAsync),
@@ -69,7 +69,7 @@ namespace Crawler.Core.FindLinkStrategies
                 }
                 catch (Exception exception)
                 {
-                    context.Logger.LogCritical("{@message}", new
+                    context.Logger?.LogCritical("{@message}", new
                     {
                         ServiceName = nameof(SitemapFindLinkStratesy),
                         ActionName = nameof(FindLinksAsync),
