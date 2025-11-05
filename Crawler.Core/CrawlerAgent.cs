@@ -26,7 +26,7 @@ namespace Crawler.Core
         {
             await foreach (var pageLink in findLinkStrategy.FindLinksAsync(_context))
             {
-                await ParsPageAsync(nameof(CrawlDomainAsync), pageLink.Uri, _context.PageIdXpath, pageProcessorAsync);
+                await ParsPageAsync(nameof(CrawlDomainAsync), pageLink.Uri, pageProcessorAsync, _context.PageIdXpath);
             }
         }
 
@@ -39,11 +39,11 @@ namespace Crawler.Core
 
             return Parallel.ForEachAsync(pages, parallelOptions, async (page, cancellationToken) =>
             {
-                await ParsPageAsync(nameof(CrawlPagesAsync), page, _context.PageIdXpath, pageProcessorAsync);
+                await ParsPageAsync(nameof(CrawlPagesAsync), page, pageProcessorAsync, _context.PageIdXpath);
             });
         }
 
-        private async Task ParsPageAsync(string serviceName, Uri pageUri, string pageIdXpath, Func<CrawlContext, Uri, Dictionary<string, string>, Task> pageProcessorAsync)
+        private async Task ParsPageAsync(string serviceName, Uri pageUri, Func<CrawlContext, Uri, Dictionary<string, string>, Task> pageProcessorAsync, string pageIdXpath = "")
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -51,25 +51,26 @@ namespace Crawler.Core
             Dictionary<string, string> foundElements = new();
             try
             {
-                if (string.IsNullOrEmpty(pageIdXpath))
-                {
-                    return;
-                }
-
+              
                 Stream pageStream = await _context.HttpClient.GetStreamAsync(pageUri);
 
                 HtmlDocument htmlDocument = new();
                 htmlDocument.Load(pageStream, Encoding.UTF8, false);
 
-                string pageId = htmlDocument.DocumentNode?
+
+                if (!string.IsNullOrEmpty(pageIdXpath)) 
+                {
+                    string pageId = htmlDocument.DocumentNode?
                                             .SelectNodes(pageIdXpath)?
                                             .FirstOrDefault()?.InnerText
                                             ?.Trim() ?? "";
 
-                if (string.IsNullOrEmpty(pageId))
-                {
-                    return;
+                    if (string.IsNullOrEmpty(pageId))
+                    {
+                        return;
+                    }
                 }
+                
 
                 foreach (var elementMaps in _context.PageElementMaps)
                 {

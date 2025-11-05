@@ -17,7 +17,7 @@ namespace Crawler.Core
         public Uri Domain { get; }
         public string SitemapPath { get; set; }
         public string[] PageUrlFilters { get; set; }
-        public string PageIdXpath { get; set; }
+        public string PageIdXpath { get; set; } = string.Empty;
         public Dictionary<string, string[]> PageElementMaps { get; set; }
         public Dictionary<string, object> AdditionalData { get; set; }
 
@@ -38,7 +38,14 @@ namespace Crawler.Core
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
             };
+            
             HttpClient = new HttpClient(clientHandler);
+            
+            //add these headers to show normal client
+            HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0");
+            HttpClient.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            HttpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.5");
+            HttpClient.DefaultRequestHeaders.Referrer = new Uri("https://www.google.com/");
 
             if (httpConnectionLimit > 0)
             {
