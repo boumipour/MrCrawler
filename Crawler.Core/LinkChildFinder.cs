@@ -50,7 +50,7 @@ namespace Crawler.Core
             }
             catch (Exception exception)
             {
-                _context.Logger.LogCritical("{@message}", new
+                _context.Logger?.LogCritical("{@message}", new
                 {
                     ServiceName = nameof(LinkChildFinder),
                     ActionName = nameof(FindAsync),
@@ -120,7 +120,7 @@ namespace Crawler.Core
                 }
                 catch (Exception exception)
                 {
-                    _context.Logger.LogCritical("{@message}", new
+                    _context.Logger?.LogCritical("{@message}", new
                     {
                         ServiceName = nameof(LinkChildFinder),
                         ActionName = nameof(FindAsync),
