@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Crawler.Core.FindLinkSteratesies
+namespace Crawler.Core.FindLinkStrategies
 {
     public class BlindlyFindLinkStrategy : IFindLinkStrategy
     {

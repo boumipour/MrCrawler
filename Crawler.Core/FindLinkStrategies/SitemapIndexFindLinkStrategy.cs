@@ -8,7 +8,7 @@ using Utility.Extensions;
 
 namespace Crawler.Core.FindLinkStrategies
 {
-    public class SitemapIndexFindLinkStratesy : IFindLinkStrategy
+    public class SitemapIndexFindLinkStrategy : IFindLinkStrategy
     {
         private bool disposedValue;
 
@@ -37,7 +37,7 @@ namespace Crawler.Core.FindLinkStrategies
             {
                 context.Logger?.LogCritical("{@message}", new
                 {
-                    ServiceName = nameof(SitemapIndexFindLinkStratesy),
+                    ServiceName = nameof(SitemapIndexFindLinkStrategy),
                     ActionName = nameof(FindLinksAsync),
                     Domain = context.Domain.AbsoluteUri,
                     Page = context.SitemapPath,
@@ -75,7 +75,7 @@ namespace Crawler.Core.FindLinkStrategies
                 {
                     context.Logger?.LogCritical("{@message}", new
                     {
-                        ServiceName = nameof(SitemapIndexFindLinkStratesy),
+                        ServiceName = nameof(SitemapIndexFindLinkStrategy),
                         ActionName = nameof(FindLinksAsync),
                         Domain = context.Domain.AbsoluteUri,
                         Page = siteMapUri,
@@ -113,7 +113,7 @@ namespace Crawler.Core.FindLinkStrategies
                     {
                         context.Logger?.LogCritical("{@message}", new
                         {
-                            ServiceName = nameof(SitemapIndexFindLinkStratesy),
+                            ServiceName = nameof(SitemapIndexFindLinkStrategy),
                             ActionName = nameof(FindLinksAsync),
                             Domain = context.Domain.AbsoluteUri,
                             Page = pagelink,

@@ -1,0 +1,58 @@
+name: Publish to NuGet
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: nuget
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Restore
+        run: dotnet restore MrCrawler.sln
+
+      - name: Build
+        run: dotnet build MrCrawler.sln --configuration Release --no-restore
+
+      - name: Pack
+        run: >
+          dotnet pack Crawler.Core/Crawler.Core.csproj
+          --configuration Release
+          --no-build
+          --output ./nupkg
+          -p:PackageVersion=${{ steps.version.outputs.VERSION }}
+
+      - name: Push package to NuGet.org
+        run: >
+          dotnet nuget push ./nupkg/*.nupkg
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+      - name: Push symbols to NuGet.org
+        run: >
+          dotnet nuget push ./nupkg/*.snupkg
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate

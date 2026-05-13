@@ -7,10 +7,10 @@ namespace Crawler.Core
         public Uri Uri { get; }
         public int Deep { get; }
 
-        public Link(Uri uri, int depp)
+        public Link(Uri uri, int deep)
         {
             Uri = uri;
-            Deep = depp;
+            Deep = deep;
         }
 
         public override int GetHashCode()

@@ -1,14 +1,48 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Crawler.Core</AssemblyName>
+    <RootNamespace>Crawler.Core</RootNamespace>
+
+    <!-- NuGet identity -->
+    <PackageId>MrCrawler</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Majid Boumipour</Authors>
+    <Copyright>Copyright © 2024-2026 Majid Boumipour</Copyright>
+    <Title>MrCrawler — .NET Web Crawling Framework</Title>
+    <Description>A flexible, async .NET web crawling framework with XPath-based element extraction and pluggable link discovery strategies. Supports blind recursive crawling, sitemap.xml parsing, and sitemap index crawling. Built on HtmlAgilityPack.</Description>
+    <PackageTags>crawler;web-scraping;html;xpath;sitemap;htmlagilitypack;async;dotnet</PackageTags>
+
+    <!-- Source and license -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/boumipour/MrCrawler</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/boumipour/MrCrawler</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <!-- Symbols and source debugging -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+
+    <!-- IntelliSense XML docs in consuming projects -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
-  
- 
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.33" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.71" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 </Project>
